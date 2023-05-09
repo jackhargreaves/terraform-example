@@ -1,0 +1,46 @@
+module "foo" {
+  source = "../foo"
+
+  for_each = {
+    first = {
+        label = "first"
+    }
+    second = {
+       label = "second"
+    }
+  }
+
+  fixed_id         = "fixed"
+  parameterized_id = each.value
+}
+
+output "first" {
+  value = module.foo["first"]
+}
+
+output "second" {
+  value = module.foo["second"]
+}
+
+moved {
+  from = module.first
+  to   = module.foo["first"]
+}
+
+moved {
+  from = module.second
+  to   = module.foo["second"]
+}
+
+# move does not properly work without these
+/*
+moved {
+ from = module.foo["first"].random_integer.parameterized
+ to   = module.foo["first"].random_integer.parameterized["label"]
+}
+
+moved {
+ from = module.foo["second"].random_integer.parameterized
+ to   = module.foo["second"].random_integer.parameterized["label"]
+}
+ */

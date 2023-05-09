@@ -1,0 +1,21 @@
+module "first" {
+  source = "../foo_initial"
+
+  fixed_id         = "fixed"
+  parameterized_id = "first"
+}
+
+module "second" {
+  source = "../foo_initial"
+
+  fixed_id         = "fixed"
+  parameterized_id = "second"
+}
+
+output "first" {
+  value = module.first
+}
+
+output "second" {
+  value = module.second
+}
